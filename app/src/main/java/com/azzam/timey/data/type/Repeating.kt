@@ -2,10 +2,10 @@ package com.azzam.timey.data.type
 
 // Repeating class, which describes how an Event, Task, or Habit repeats.
 data class Repeating(
-    var repeatingType: Int, // Check companion object below.
-    var value: Int, // Repeating value: repeat every (value) days.
+    var repeatingType: Int,
+    var value: Int, // value = 5: repeat once every 5 days.
     var repeatingExtra: String, // Additional information depending on repeating type. Example: April 14 for YEARLY type.
-    var endType: Int, // Check companion object below.
+    var endType: Int,
     var endExtra: String // Additional information depending on end type. Example: April 14 for DATE type.
 ) {
    companion object Types{
