@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Timey</string>
+    <string name="new_event_button">EVENT</string>
+    <string name="new_task_button">TASK</string>
+    <string name="new_habit_button">HABIT</string>
 </resources>
