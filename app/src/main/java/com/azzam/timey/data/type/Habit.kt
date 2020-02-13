@@ -8,6 +8,6 @@ data class Habit(
     var startDate: Date,
     var finishDate: Date?,
     var times: List<Date>,
-    var repeating: Repeating?,
+    var repeating: Repeating,
     var reminder: Reminder?
 )
