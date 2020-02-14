@@ -6,11 +6,11 @@ data class Repeating(
     var value: Int, // value = 5: repeat once every 5 days.
     var repeatingExtra: String, // Additional information depending on repeating type. Example: April 14 for YEARLY type.
     var endType: Int,
-    var endExtra: String // Additional information depending on end type. Example: April 14 for DATE type.
+    var endExtra: Long // Additional information depending on end type. Example: April 14 for DATE type.
 ) {
    companion object Types{
        // Repeating types
-       val DIALY: Int = 0
+       val DAILY: Int = 0
        val WEEKLY: Int = 1
        val MONTHLY_BY_DAY: Int = 2 // Example: 10th of every month
        val MONTHLY_BY_DAY_OF_WEEK: Int = 3 // Example: Second Sunday
