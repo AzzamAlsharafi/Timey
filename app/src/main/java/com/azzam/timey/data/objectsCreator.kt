@@ -1,6 +1,10 @@
 package com.azzam.timey.data
 
+import android.content.Context
+import android.util.Log
 import com.azzam.timey.data.type.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 class objectsCreator {
@@ -39,4 +43,24 @@ class objectsCreator {
         Habit("Reading", "Reading 50 pages in the weekends at morning and evening", Date(1582837200000), twoTimes, repeatWeeklyWeekend, Reminder(5, Reminder.MINUTES)),
         Habit("Programming", "Programming daily for one hour", Date(1582837200000), oneTime, repeatWeeklyAll, Reminder(0, 0))
     )
+
+    fun insertData(context: Context) = GlobalScope.launch{
+        val database = AppDatabase.getDatabase(context)
+
+        val eventDao = database.EventDao()
+        val taskDao = database.TaskDao()
+        val habitDao = database.HabitDao()
+
+        for (e in events){
+            Log.i("DATA-TAG", eventDao.insert(e).toString())
+        }
+
+        for (t in Tasks){
+            Log.i("DATA-TAG", taskDao.insert(t).toString())
+        }
+
+        for (h in Habits){
+            Log.i("DATA-TAG", habitDao.insert(h).toString())
+        }
+    }
 }
