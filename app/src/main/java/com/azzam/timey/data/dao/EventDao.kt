@@ -7,7 +7,7 @@ import com.azzam.timey.data.type.Event
 @Dao
 interface EventDao {
     @Query("SELECT * FROM events_table ORDER BY start_date_time")
-    suspend fun getAll(): List<Event>
+    fun getAll(): LiveData<List<Event>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(event: Event): Long
