@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.azzam.timey.data.dao.EventDao
 import com.azzam.timey.data.entity.Event
 
-class EventRepository(private val eventDao: EventDao) {
+class EventRepository private constructor(private val eventDao: EventDao) {
     val allEvents: LiveData<List<Event>> = eventDao.getAll()
 
     suspend fun insert(event: Event): Long = eventDao.insert(event)
