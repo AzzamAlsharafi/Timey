@@ -1,4 +1,4 @@
-package com.azzam.timey.data.type
+package com.azzam.timey.data.entity
 
 // Repeating class, which describes how an Event, Task, or Habit repeats.
 data class Repeating(

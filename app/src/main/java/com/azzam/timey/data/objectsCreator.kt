@@ -2,7 +2,7 @@ package com.azzam.timey.data
 
 import android.content.Context
 import android.util.Log
-import com.azzam.timey.data.type.*
+import com.azzam.timey.data.entity.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*

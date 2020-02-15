@@ -2,7 +2,7 @@ package com.azzam.timey.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.azzam.timey.data.type.Task
+import com.azzam.timey.data.entity.Task
 
 @Dao
 interface TaskDao {

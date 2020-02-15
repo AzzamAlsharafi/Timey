@@ -1,4 +1,4 @@
-package com.azzam.timey.data.type
+package com.azzam.timey.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
@@ -6,19 +6,17 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.Date
 
-@Entity(tableName = "habits_table")
-data class Habit(
+@Entity(tableName = "tasks_table")
+data class Task(
     var title: String,
 
     var description: String,
 
-    @ColumnInfo(name = "start_date")
-    var startDate: Date,
-
-    var times: List<Date>,
+    @ColumnInfo(name = "date_time")
+    var dateTime: Date,
 
     @Embedded
-    var repeating: Repeating,
+    var repeating: Repeating?,
 
     @Embedded
     var reminder: Reminder?,

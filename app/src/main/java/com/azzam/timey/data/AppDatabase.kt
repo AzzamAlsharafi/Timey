@@ -8,9 +8,9 @@ import androidx.room.TypeConverters
 import com.azzam.timey.data.dao.EventDao
 import com.azzam.timey.data.dao.HabitDao
 import com.azzam.timey.data.dao.TaskDao
-import com.azzam.timey.data.type.Event
-import com.azzam.timey.data.type.Habit
-import com.azzam.timey.data.type.Task
+import com.azzam.timey.data.entity.Event
+import com.azzam.timey.data.entity.Habit
+import com.azzam.timey.data.entity.Task
 
 @Database(entities = arrayOf(Event::class, Habit::class, Task::class), version = 1, exportSchema = false)
 @TypeConverters(DataConverters::class)

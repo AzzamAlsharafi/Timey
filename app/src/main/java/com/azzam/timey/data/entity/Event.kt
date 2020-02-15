@@ -1,4 +1,4 @@
-package com.azzam.timey.data.type
+package com.azzam.timey.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded

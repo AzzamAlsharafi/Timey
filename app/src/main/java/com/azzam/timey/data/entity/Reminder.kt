@@ -1,4 +1,4 @@
-package com.azzam.timey.data.type
+package com.azzam.timey.data.entity
 
 // Reminder class, which describes when to remind the user of an Event, Task, or Habit relative to the object's time.
 data class Reminder(
