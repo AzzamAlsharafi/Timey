@@ -1,8 +1,8 @@
 package com.azzam.timey.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.azzam.timey.data.AppDatabase
 import com.azzam.timey.data.entity.Event
@@ -13,7 +13,7 @@ import com.azzam.timey.data.repository.HabitRepository
 import com.azzam.timey.data.repository.TaskRepository
 import kotlinx.coroutines.launch
 
-class MainActivityViewModel(application: Application) : ViewModel() {
+class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
     private val database: AppDatabase
 
