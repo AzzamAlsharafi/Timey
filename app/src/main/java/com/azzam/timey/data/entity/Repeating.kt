@@ -1,11 +1,22 @@
 package com.azzam.timey.data.entity
 
+import androidx.room.ColumnInfo
+
 // Repeating class, which describes how an Event, Task, or Habit repeats.
 data class Repeating(
+    @ColumnInfo(name = "repeating_type")
     var repeatingType: Int,
+
+    @ColumnInfo(name = "repeating_value")
     var repeatingValue: Int, // value = 5: repeat once every 5 days.
+
+    @ColumnInfo(name = "repeating_extra")
     var repeatingExtra: String, // Additional information depending on repeating type. Example: April 14 for YEARLY type.
+
+    @ColumnInfo(name = "end_type")
     var endType: Int,
+
+    @ColumnInfo(name = "end_extra")
     var endExtra: Long // Additional information depending on end type. Example: April 14 for DATE type.
 ) {
    companion object {
