@@ -3,6 +3,7 @@ package com.azzam.timey.data
 import androidx.room.TypeConverter
 import java.util.*
 
+// Data converter functions to convert between data types which can't be stored in the database.
 class DataConverters {
     @TypeConverter
     fun fromTimestamp(value: Long): Date {

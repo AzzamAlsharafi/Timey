@@ -14,6 +14,8 @@ class EventRepository private constructor(private val eventDao: EventDao) {
     suspend fun update(event: Event) = eventDao.update(event)
 
     companion object {
+
+        // Singleton
         @Volatile
         private var INSTANCE: EventRepository? = null
 

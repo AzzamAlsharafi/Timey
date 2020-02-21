@@ -14,6 +14,8 @@ class TaskRepository private constructor(private val taskDao: TaskDao) {
     suspend fun update(task: Task) = taskDao.update(task)
 
     companion object {
+
+        // Singleton
         @Volatile
         private var INSTANCE: TaskRepository? = null
 

@@ -14,6 +14,8 @@ class HabitRepository private constructor(private val habitDao: HabitDao) {
     suspend fun update(habit: Habit) = habitDao.update(habit)
 
     companion object {
+
+        // Singleton
         @Volatile
         private var INSTANCE: HabitRepository? = null
 
