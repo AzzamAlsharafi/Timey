@@ -16,10 +16,10 @@ data class Task(
     var dateTime: Date,
 
     @Embedded
-    var repeating: Repeating?,
+    var repeating: Repeating,
 
     @Embedded
-    var reminder: Reminder?,
+    var reminder: Reminder,
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

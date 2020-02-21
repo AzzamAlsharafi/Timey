@@ -28,20 +28,20 @@ class objectsCreator {
 
     val events: List<Event> = listOf(
         Event("Meeting", "Company's monthly meeting", Date(1583046000000), Date(1583049600000), false, repeatFirstSunday, Reminder(45, Reminder.MINUTES)),
-        Event("Holidays Day", "Celebration of Holidays", Date(1583182800000), Date(1583182800000), true, repeatYearly, null),
+        Event("Holidays Day", "Celebration of Holidays", Date(1583182800000), Date(1583182800000), true, repeatYearly, Reminder.NO_REMINDER),
         Event("Three Days", "Three Days Event which isn't three days long", Date(1583398800000), Date(1583416800000), false, repeatYearlyEnding, Reminder(5, Reminder.MINUTES))
     )
 
     val Tasks: List<Task> = listOf(
-        Task("Read Task", "Read at least 50 pages of a book", Date(1582894800000), repeatTwoDaily, Reminder(0, 0)),
-        Task("Clean", "Clean the house", Date(1582956000000), repeatWeekly, Reminder(0, 0)),
-        Task("Develop Task", "Develop the app", Date(1582909200000), repeatDaily, Reminder(0, 0)),
-        Task("Hour of Code", "Compete in Hour of Code", Date(1583071200000), null, Reminder(10, Reminder.MINUTES))
+        Task("Read Task", "Read at least 50 pages of a book", Date(1582894800000), repeatTwoDaily, Reminder.NO_REMINDER),
+        Task("Clean", "Clean the house", Date(1582956000000), repeatWeekly, Reminder.NO_REMINDER),
+        Task("Develop Task", "Develop the app", Date(1582909200000), repeatDaily, Reminder.NO_REMINDER),
+        Task("Hour of Code", "Compete in Hour of Code", Date(1583071200000), Repeating.NO_REPEATING, Reminder(10, Reminder.MINUTES))
     )
 
     val Habits: List<Habit> = listOf(
         Habit("Reading", "Reading 50 pages in the weekends at morning and evening", Date(1582837200000), twoTimes, repeatWeeklyWeekend, Reminder(5, Reminder.MINUTES)),
-        Habit("Programming", "Programming daily for one hour", Date(1582837200000), oneTime, repeatWeeklyAll, Reminder(0, 0))
+        Habit("Programming", "Programming daily for one hour", Date(1582837200000), oneTime, repeatWeeklyAll, Reminder.NO_REMINDER)
     )
 
     fun insertData(context: Context) = GlobalScope.launch{

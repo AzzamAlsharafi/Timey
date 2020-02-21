@@ -21,7 +21,7 @@ data class Habit(
     var repeating: Repeating,
 
     @Embedded
-    var reminder: Reminder?,
+    var reminder: Reminder,
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

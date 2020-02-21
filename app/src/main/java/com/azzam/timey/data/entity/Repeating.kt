@@ -8,7 +8,7 @@ data class Repeating(
     var endType: Int,
     var endExtra: Long // Additional information depending on end type. Example: April 14 for DATE type.
 ) {
-   companion object Types{
+   companion object {
        // Repeating types
        val DAILY: Int = 0
        val WEEKLY: Int = 1
@@ -20,5 +20,7 @@ data class Repeating(
        val NEVER: Int = 0 // Never stop repeating.
        val DATE: Int = 1 // Stop at a specific date.
        val OCCURRENCES: Int = 2 // Stop after a number of occurrences.
+
+       val NO_REPEATING = Repeating(0, 0, "", 0, 0)
    }
 }
