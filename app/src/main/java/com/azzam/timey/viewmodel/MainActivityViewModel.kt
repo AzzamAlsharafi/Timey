@@ -7,9 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.azzam.timey.data.AppDatabase
 import com.azzam.timey.data.entity.Event
 import com.azzam.timey.data.entity.Habit
+import com.azzam.timey.data.entity.Occurrence
 import com.azzam.timey.data.entity.Task
 import com.azzam.timey.data.repository.EventRepository
 import com.azzam.timey.data.repository.HabitRepository
+import com.azzam.timey.data.repository.OccurrenceRepository
 import com.azzam.timey.data.repository.TaskRepository
 import kotlinx.coroutines.launch
 
@@ -20,6 +22,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val eventRepository: EventRepository
     private val habitRepository: HabitRepository
     private val taskRepository: TaskRepository
+    private val occurrenceRepository: OccurrenceRepository
 
     val allEvents: LiveData<List<Event>>
     val allHabits: LiveData<List<Habit>>
@@ -28,9 +31,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     init {
         database = AppDatabase.getDatabase(application)
 
-        eventRepository = EventRepository.getInstance(database.EventDao())
-        habitRepository = HabitRepository.getInstance(database.HabitDao())
-        taskRepository = TaskRepository.getInstance(database.TaskDao())
+        eventRepository = EventRepository(database.EventDao())
+        habitRepository = HabitRepository(database.HabitDao())
+        taskRepository = TaskRepository(database.TaskDao())
+        occurrenceRepository = OccurrenceRepository(database.OccurrenceDao())
 
         allEvents = eventRepository.allEvents
         allHabits = habitRepository.allHabits
