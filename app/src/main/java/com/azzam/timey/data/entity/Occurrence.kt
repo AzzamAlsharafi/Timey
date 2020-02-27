@@ -3,7 +3,7 @@ package com.azzam.timey.data.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
+import org.threeten.bp.ZonedDateTime
 
 @Entity(tableName = "occurrences_table")
 data class Occurrence(
@@ -14,10 +14,10 @@ data class Occurrence(
     var parentType: Int,
 
     @ColumnInfo(name = "start_date_time")
-    var startDateTime: Date,
+    var startDateTime: ZonedDateTime,
 
     @ColumnInfo(name = "end_date_time")
-    var endDateTime: Date,
+    var endDateTime: ZonedDateTime,
 
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0

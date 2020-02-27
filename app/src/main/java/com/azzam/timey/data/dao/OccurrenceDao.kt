@@ -6,6 +6,7 @@ import com.azzam.timey.data.entity.Occurrence
 
 @Dao
 interface OccurrenceDao {
+    // TODO: Change Query clause to work with ThreeTen date and time objects
     @Query("SELECT * FROM occurrences_table WHERE start_date_time <= :rangeEnd AND end_date_time >= :rangeStart")
     fun getAllInTimeRange(rangeStart: Long, rangeEnd: Long): LiveData<List<Occurrence>>
 

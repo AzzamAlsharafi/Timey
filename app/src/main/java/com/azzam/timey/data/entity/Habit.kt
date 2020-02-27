@@ -4,7 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.Date
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
 
 @Entity(tableName = "habits_table")
 data class Habit(
@@ -13,9 +14,12 @@ data class Habit(
     var description: String,
 
     @ColumnInfo(name = "start_date")
-    var startDate: Date,
+    var startDate: LocalDate,
 
-    var times: List<Date>,
+    @ColumnInfo(name = "end_date")
+    var endDate: LocalDate,
+
+    var times: List<LocalTime>,
 
     @Embedded
     var repeating: Repeating,

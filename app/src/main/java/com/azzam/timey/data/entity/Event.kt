@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.Date
+import org.threeten.bp.ZonedDateTime
 
 @Entity(tableName = "events_table")
 data class Event(
@@ -13,10 +13,10 @@ data class Event(
     var description: String,
 
     @ColumnInfo(name = "start_date_time")
-    var startDateTime: Date,
+    var startDateTime: ZonedDateTime,
 
-    @ColumnInfo(name = "finish_date_time")
-    var finishDateTime: Date,
+    @ColumnInfo(name = "end_date_time")
+    var endDateTime: ZonedDateTime,
 
     @ColumnInfo(name = "all_day")
     var allDay: Boolean,
