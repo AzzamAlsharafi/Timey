@@ -4,7 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.threeten.bp.ZonedDateTime
+import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.ZoneId
 
 @Entity(tableName = "tasks_table")
 data class Task(
@@ -13,7 +14,9 @@ data class Task(
     var description: String,
 
     @ColumnInfo(name = "date_time")
-    var dateTime: ZonedDateTime,
+    var dateTime: OffsetDateTime,
+
+    var timezone: ZoneId,
 
     @Embedded
     var repeating: Repeating,

@@ -1,25 +1,26 @@
 package com.azzam.timey.data
 
 import androidx.room.TypeConverter
-import org.threeten.bp.ZonedDateTime
+import org.threeten.bp.OffsetDateTime
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
+import org.threeten.bp.OffsetTime
+import org.threeten.bp.ZoneId
 import org.threeten.bp.format.DateTimeFormatter
 
 // Data converter functions to convert between data types which can't be stored in the database.
 class DataConverters {
-    private val zonedDateTimeFormatter = DateTimeFormatter.ISO_ZONED_DATE_TIME
+    private val offsetDateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
     private val localDateFormatter = DateTimeFormatter.ISO_LOCAL_DATE
-    private val localTimeFormatter = DateTimeFormatter.ISO_LOCAL_TIME
+    private val offsetTimeFormatter = DateTimeFormatter.ISO_OFFSET_TIME
 
     @TypeConverter
-    fun stringToZonedDateTime(string: String): ZonedDateTime {
-        return ZonedDateTime.parse(string, zonedDateTimeFormatter)
+    fun stringToOffsetDateTime(string: String): OffsetDateTime {
+        return OffsetDateTime.parse(string, offsetDateTimeFormatter)
     }
 
     @TypeConverter
-    fun zonedDateTimeToString(zonedDateTime: ZonedDateTime): String {
-        return zonedDateTime.format(zonedDateTimeFormatter)
+    fun offsetDateTimeToString(offsetDateTime: OffsetDateTime): String {
+        return offsetDateTime.format(offsetDateTimeFormatter)
     }
 
     @TypeConverter
@@ -33,12 +34,22 @@ class DataConverters {
     }
 
     @TypeConverter
-    fun localTimeListToString(times: List<LocalTime>) : String{
-        return times.map { it.format(localTimeFormatter) }.joinToString(", ")
+    fun offsetTimeListToString(times: List<OffsetTime>) : String{
+        return times.joinToString(", ") { it.format(offsetTimeFormatter) }
     }
 
     @TypeConverter
-    fun stringToLocalTimeList(string: String) : List<LocalTime>{
-        return string.split(", ").map { LocalTime.parse(it, localTimeFormatter) }
+    fun stringToOffsetTimeList(string: String) : List<OffsetTime>{
+        return string.split(", ").map { OffsetTime.parse(it, offsetTimeFormatter) }
+    }
+
+    @TypeConverter
+    fun stringToZoneId(string: String): ZoneId {
+        return ZoneId.of(string)
+    }
+
+    @TypeConverter
+    fun zoneIdToString(zoneId: ZoneId): String {
+        return zoneId.id
     }
 }

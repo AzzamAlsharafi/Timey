@@ -6,8 +6,7 @@ import com.azzam.timey.data.entity.Task
 
 @Dao
 interface TaskDao {
-    // TODO: Change Query clause to work with ThreeTen date and time objects
-    @Query("SELECT * FROM tasks_table ORDER BY date_time")
+    @Query("SELECT * FROM tasks_table ORDER BY datetime(date_time)")
     fun getAll(): LiveData<List<Task>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

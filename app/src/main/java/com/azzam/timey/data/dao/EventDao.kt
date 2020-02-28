@@ -6,8 +6,7 @@ import com.azzam.timey.data.entity.Event
 
 @Dao
 interface EventDao {
-    // TODO: Change Query clause to work with ThreeTen date and time objects
-    @Query("SELECT * FROM events_table ORDER BY start_date_time")
+    @Query("SELECT * FROM events_table ORDER BY datetime(start_date_time)")
     fun getAll(): LiveData<List<Event>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

@@ -6,8 +6,7 @@ import com.azzam.timey.data.entity.Habit
 
 @Dao
 interface HabitDao {
-    // TODO: Change Query clause to work with ThreeTen date and time objects
-    @Query("SELECT * FROM habits_table ORDER BY start_date")
+    @Query("SELECT * FROM habits_table ORDER BY datetime(start_date)")
     fun getAll(): LiveData<List<Habit>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
