@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.threeten.bp.LocalDate
+import org.threeten.bp.OffsetDateTime
 import org.threeten.bp.OffsetTime
 import org.threeten.bp.ZoneId
 
@@ -15,10 +15,10 @@ data class Habit(
     var description: String,
 
     @ColumnInfo(name = "start_date")
-    var startDate: LocalDate,
+    var startDate: OffsetDateTime,
 
     @ColumnInfo(name = "end_date")
-    var endDate: LocalDate,
+    var endDate: OffsetDateTime,
 
     var times: List<OffsetTime>,
 
