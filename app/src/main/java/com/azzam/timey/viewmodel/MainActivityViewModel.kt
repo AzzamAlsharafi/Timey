@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.azzam.timey.data.AppDatabase
+import com.azzam.timey.data.OccurrencesGenerator
 import com.azzam.timey.data.entity.Event
 import com.azzam.timey.data.entity.Habit
 import com.azzam.timey.data.entity.Occurrence
@@ -42,7 +43,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun insertEvent(event: Event) = viewModelScope.launch {
-        eventRepository.insert(event)
+        val id = eventRepository.insert(event)
+        event.id = id.toInt()
+        occurrenceRepository.insert(OccurrencesGenerator.generateEventOccurrences(event))
     }
 
     fun insertHabit(habit: Habit) = viewModelScope.launch {
@@ -50,6 +53,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun insertTask(task: Task) = viewModelScope.launch {
-        taskRepository.insert(task)
+        val id = taskRepository.insert(task)
+        task.id = id.toInt()
+        occurrenceRepository.insert(OccurrencesGenerator.generateTaskOccurrences(task))
     }
 }
