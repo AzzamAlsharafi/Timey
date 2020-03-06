@@ -17,7 +17,7 @@ data class Repeating(
     var endType: Int,
 
     @ColumnInfo(name = "end_extra")
-    var endExtra: Long // Additional information depending on end type. Example: April 14 for DATE type.
+    var endExtra: String // Additional information depending on end type. Example: April 14 for DATE type.
 ) {
    companion object {
        // Repeating types
@@ -32,6 +32,6 @@ data class Repeating(
        val DATE: Int = 1 // Stop at a specific date.
        val OCCURRENCES: Int = 2 // Stop after a number of occurrences.
 
-       val NO_REPEATING = Repeating(0, 0, "", 0, 0)
+       val NO_REPEATING = Repeating(0, 0, "", 0, "")
    }
 }

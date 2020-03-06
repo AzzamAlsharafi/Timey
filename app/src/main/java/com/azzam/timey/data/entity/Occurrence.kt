@@ -29,5 +29,7 @@ data class Occurrence(
         val PARENT_EVENT: Int = 0
         val PARENT_TASK: Int = 1
         val PARENT_HABIT: Int = 2
+
+        val MAX_OCCURRENCES_COUNT = 365
     }
 }
