@@ -31,6 +31,18 @@ object OccurrencesGenerator {
         { date: LocalDate, toCheck: LocalDate -> date.month == toCheck.month && date.dayOfMonth == toCheck.dayOfMonth }
 
     fun generateEventOccurrences(event: Event): List<Occurrence> {
+        if (event.repeating.repeatingValue == 0) { // None-repeating Events has one occurrence
+            return listOf(
+                Occurrence(
+                    event.id,
+                    Occurrence.PARENT_EVENT,
+                    event.startDateTime,
+                    event.endDateTime,
+                    event.timezone
+                )
+            )
+        }
+
         return when (event.repeating.endType) {
             Repeating.DATE -> eventGenerateWithEndDate(event)
             Repeating.OCCURRENCES -> eventGenerateWithOccurrencesCount(event)
@@ -134,10 +146,22 @@ object OccurrencesGenerator {
     }
 
     fun generateTaskOccurrences(task: Task): List<Occurrence> {
+        if (task.repeating.repeatingValue == 0) { // None-repeating Tasks has one occurrence
+            return listOf(
+                Occurrence(
+                    task.id,
+                    Occurrence.PARENT_TASK,
+                    task.dateTime,
+                    task.dateTime,
+                    task.timezone
+                )
+            )
+        }
+
         return when (task.repeating.endType) {
             Repeating.DATE -> taskGenerateWithEndDate(task)
             Repeating.OCCURRENCES -> taskGenerateWithOccurrencesCount(task)
-            else ->  taskGenerateWithOccurrencesCount(task)// Repeating.NEVER
+            else -> taskGenerateWithOccurrencesCount(task)// Repeating.NEVER
         }
     }
 
