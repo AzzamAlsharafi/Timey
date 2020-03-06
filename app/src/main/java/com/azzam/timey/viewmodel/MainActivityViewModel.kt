@@ -49,7 +49,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun insertHabit(habit: Habit) = viewModelScope.launch {
-        habitRepository.insert(habit)
+        val id = habitRepository.insert(habit)
+        habit.id = id.toInt()
+        occurrenceRepository.insert(OccurrencesGenerator.generateHabitOccurrences(habit))
     }
 
     fun insertTask(task: Task) = viewModelScope.launch {

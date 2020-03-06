@@ -1,15 +1,14 @@
 package com.azzam.timey.data
 
-import com.azzam.timey.data.entity.Event
-import com.azzam.timey.data.entity.Occurrence
-import com.azzam.timey.data.entity.Repeating
-import com.azzam.timey.data.entity.Task
+import com.azzam.timey.data.entity.*
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDate
 import org.threeten.bp.OffsetDateTime
 import kotlin.math.ceil
 
 object OccurrencesGenerator {
+
+    // TODO: Add support for multiple daysOfWeek repeating, and multiple daysOfMonth.
 
     // Lambdas for checking if a day is valid when looping through the repeating range
     private val checkDaily =
@@ -241,6 +240,103 @@ object OccurrencesGenerator {
                         occStart,
                         occStart,
                         task.timezone
+                    )
+                    occurrences.add(occurrence)
+                }
+                matchingDaysCounts++
+            }
+            date = date.plusDays(1)
+        }
+
+        return occurrences.toList()
+    }
+
+    fun generateHabitOccurrences(habit: Habit): List<Occurrence> {
+        return when (habit.repeating.endType) {
+            Repeating.DATE -> habitGenerateWithEndDate(habit)
+            Repeating.OCCURRENCES -> habitGenerateWithOccurrencesCount(habit)
+            else -> habitGenerateWithOccurrencesCount(habit) // Repeating.NEVER
+        }
+    }
+
+    private fun habitGenerateWithOccurrencesCount(habit: Habit): List<Occurrence> {
+        val occurrences: MutableList<Occurrence> = mutableListOf()
+
+        val r = habit.repeating
+
+        val count = if (r.endExtra.isNotEmpty()) {
+            r.endExtra.toInt()
+        } else {
+            Occurrence.MAX_OCCURRENCES_COUNT
+        }
+
+        val start = habit.startDate.atZoneSameInstant(habit.timezone)
+
+        var date = start.toLocalDate()
+
+        var matchingDaysCounts = 0
+
+        val check = when (r.repeatingType) {
+            Repeating.WEEKLY -> checkDayOfWeek
+            Repeating.MONTHLY_BY_DAY -> checkDayOfMonth
+            Repeating.MONTHLY_BY_DAY_OF_WEEK -> checkDayOfWeekOfMonth
+            Repeating.YEARLY -> checkDayOfYear
+            else -> checkDaily // Repeating.DAILY
+        }
+
+        while ((matchingDaysCounts / r.repeatingValue) < count) {
+            if (check(date, start.toLocalDate())) {
+                if (matchingDaysCounts % r.repeatingValue == 0) {
+                    val occStart: OffsetDateTime = start.with(date).toOffsetDateTime()
+                    val occurrence = Occurrence(
+                        habit.id,
+                        Occurrence.PARENT_HABIT,
+                        occStart,
+                        occStart,
+                        habit.timezone
+                    )
+                    occurrences.add(occurrence)
+                }
+                matchingDaysCounts++
+            }
+            date = date.plusDays(1)
+        }
+
+        return occurrences.toList()
+    }
+
+    private fun habitGenerateWithEndDate(habit: Habit): List<Occurrence> {
+        val occurrences: MutableList<Occurrence> = mutableListOf()
+
+        val r = habit.repeating
+
+        val start = habit.startDate.atZoneSameInstant(habit.timezone)
+        val end = habit.endDate.atZoneSameInstant(habit.timezone)
+
+        val rEnd = end.toLocalDate().plusDays(1)
+
+        var date = start.toLocalDate()
+
+        var matchingDaysCounts = 0
+
+        val check = when (r.repeatingType) {
+            Repeating.WEEKLY -> checkDayOfWeek
+            Repeating.MONTHLY_BY_DAY -> checkDayOfMonth
+            Repeating.MONTHLY_BY_DAY_OF_WEEK -> checkDayOfWeekOfMonth
+            Repeating.YEARLY -> checkDayOfYear
+            else -> checkDaily // Repeating.DAILY
+        }
+
+        while (date.isBefore(rEnd)) {
+            if (check(date, start.toLocalDate())) {
+                if (matchingDaysCounts % r.repeatingValue == 0) {
+                    val occStart: OffsetDateTime = start.with(date).toOffsetDateTime()
+                    val occurrence = Occurrence(
+                        habit.id,
+                        Occurrence.PARENT_HABIT,
+                        occStart,
+                        occStart,
+                        habit.timezone
                     )
                     occurrences.add(occurrence)
                 }
