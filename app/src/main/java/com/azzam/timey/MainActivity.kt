@@ -14,5 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+
+        DailyAlarmReceiver.setTomorrowAlarm(this)
     }
 }
