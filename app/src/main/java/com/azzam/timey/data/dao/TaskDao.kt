@@ -9,6 +9,12 @@ interface TaskDao {
     @Query("SELECT * FROM tasks_table ORDER BY datetime(date_time)")
     fun getAll(): LiveData<List<Task>>
 
+    @Query("SELECT * FROM tasks_table WHERE id == :id")
+    suspend fun getById(id: Int): Task
+
+    @Query("SELECT * FROM tasks_table WHERE id IN (:ids)")
+    suspend fun getByIds(ids: List<Int>): List<Task>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(task: Task): Long
 

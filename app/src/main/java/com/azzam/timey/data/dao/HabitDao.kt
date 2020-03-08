@@ -9,6 +9,12 @@ interface HabitDao {
     @Query("SELECT * FROM habits_table ORDER BY datetime(start_date)")
     fun getAll(): LiveData<List<Habit>>
 
+    @Query("SELECT * FROM habits_table WHERE id == :id")
+    suspend fun getById(id: Int): Habit
+
+    @Query("SELECT * FROM habits_table WHERE id IN (:ids)")
+    suspend fun getByIds(ids: List<Int>): List<Habit>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(habit: Habit): Long
 
