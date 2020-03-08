@@ -14,8 +14,9 @@ data class Reminder(
         val MINUTES: Int = 0
         val HOURS: Int = 1
         val DAYS: Int = 2
+        val NONE: Int = 3
 
         val ON_TIME_REMINDER = Reminder(0, 0)
-        val NO_REMINDER = Reminder(0, 3)
+        val NO_REMINDER = Reminder(0, NONE)
     }
 }
