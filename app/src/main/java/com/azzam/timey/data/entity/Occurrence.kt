@@ -1,6 +1,7 @@
 package com.azzam.timey.data.entity
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.threeten.bp.OffsetDateTime
@@ -21,6 +22,9 @@ data class Occurrence(
     var endDateTime: OffsetDateTime,
 
     var timezone: ZoneId,
+
+    @Embedded
+    var reminder: Reminder,
 
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0

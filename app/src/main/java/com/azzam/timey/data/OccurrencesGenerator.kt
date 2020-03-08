@@ -37,7 +37,8 @@ object OccurrencesGenerator {
                     Occurrence.PARENT_EVENT,
                     event.startDateTime,
                     event.endDateTime,
-                    event.timezone
+                    event.timezone,
+                    event.reminder
                 )
             )
         }
@@ -87,7 +88,8 @@ object OccurrencesGenerator {
                         Occurrence.PARENT_EVENT,
                         occStart,
                         occEnd,
-                        event.timezone
+                        event.timezone,
+                        event.reminder
                     )
                     occurrences.add(occurrence)
                 }
@@ -132,7 +134,8 @@ object OccurrencesGenerator {
                         Occurrence.PARENT_EVENT,
                         occStart,
                         occEnd,
-                        event.timezone
+                        event.timezone,
+                        event.reminder
                     )
                     occurrences.add(occurrence)
                 }
@@ -152,7 +155,8 @@ object OccurrencesGenerator {
                     Occurrence.PARENT_TASK,
                     task.dateTime,
                     task.dateTime,
-                    task.timezone
+                    task.timezone,
+                    task.reminder
                 )
             )
         }
@@ -198,7 +202,8 @@ object OccurrencesGenerator {
                         Occurrence.PARENT_TASK,
                         occStart,
                         occStart,
-                        task.timezone
+                        task.timezone,
+                        task.reminder
                     )
                     occurrences.add(occurrence)
                 }
@@ -239,7 +244,8 @@ object OccurrencesGenerator {
                         Occurrence.PARENT_TASK,
                         occStart,
                         occStart,
-                        task.timezone
+                        task.timezone,
+                        task.reminder
                     )
                     occurrences.add(occurrence)
                 }
@@ -293,7 +299,8 @@ object OccurrencesGenerator {
                         Occurrence.PARENT_HABIT,
                         occStart,
                         occStart,
-                        habit.timezone
+                        habit.timezone,
+                        habit.reminder
                     )
                     occurrences.add(occurrence)
                 }
@@ -336,7 +343,8 @@ object OccurrencesGenerator {
                         Occurrence.PARENT_HABIT,
                         occStart,
                         occStart,
-                        habit.timezone
+                        habit.timezone,
+                        habit.reminder
                     )
                     occurrences.add(occurrence)
                 }
