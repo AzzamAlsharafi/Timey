@@ -14,7 +14,7 @@ data class Task(
     var description: String,
 
     @ColumnInfo(name = "date_time")
-    var dateTime: OffsetDateTime,
+    var dateTime: Long, // stored as milliseconds since epoch
 
     var timezone: ZoneId,
 

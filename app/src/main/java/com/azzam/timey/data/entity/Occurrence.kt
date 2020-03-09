@@ -16,10 +16,10 @@ data class Occurrence(
     var parentType: Int,
 
     @ColumnInfo(name = "start_date_time")
-    var startDateTime: OffsetDateTime,
+    var startDateTime: Long, // stored as milliseconds since epoch
 
     @ColumnInfo(name = "end_date_time")
-    var endDateTime: OffsetDateTime,
+    var endDateTime: Long, // stored as milliseconds since epoch
 
     var timezone: ZoneId,
 

@@ -6,7 +6,7 @@ import com.azzam.timey.data.entity.Habit
 
 @Dao
 interface HabitDao {
-    @Query("SELECT * FROM habits_table ORDER BY datetime(start_date)")
+    @Query("SELECT * FROM habits_table ORDER BY start_date")
     fun getAll(): LiveData<List<Habit>>
 
     @Query("SELECT * FROM habits_table WHERE id == :id")

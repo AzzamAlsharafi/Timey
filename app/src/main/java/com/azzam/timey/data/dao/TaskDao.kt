@@ -6,7 +6,7 @@ import com.azzam.timey.data.entity.Task
 
 @Dao
 interface TaskDao {
-    @Query("SELECT * FROM tasks_table ORDER BY datetime(date_time)")
+    @Query("SELECT * FROM tasks_table ORDER BY date_time")
     fun getAll(): LiveData<List<Task>>
 
     @Query("SELECT * FROM tasks_table WHERE id == :id")

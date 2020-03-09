@@ -6,7 +6,7 @@ import com.azzam.timey.data.entity.Event
 
 @Dao
 interface EventDao {
-    @Query("SELECT * FROM events_table ORDER BY datetime(start_date_time)")
+    @Query("SELECT * FROM events_table ORDER BY start_date_time")
     fun getAll(): LiveData<List<Event>>
 
     @Query("SELECT * FROM events_table WHERE id == :id")

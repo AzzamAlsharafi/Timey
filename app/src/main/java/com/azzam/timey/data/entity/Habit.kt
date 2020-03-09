@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import org.threeten.bp.LocalTime
 import org.threeten.bp.OffsetDateTime
 import org.threeten.bp.OffsetTime
 import org.threeten.bp.ZoneId
@@ -15,12 +16,9 @@ data class Habit(
     var description: String,
 
     @ColumnInfo(name = "start_date")
-    var startDate: OffsetDateTime,
+    var startDate: Long, // stored as milliseconds since epoch
 
-    @ColumnInfo(name = "end_date")
-    var endDate: OffsetDateTime,
-
-    var times: List<OffsetTime>,
+    var times: List<LocalTime>,
 
     var timezone: ZoneId,
 
