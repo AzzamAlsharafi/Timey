@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import com.azzam.timey.data.AppDatabase
+import com.azzam.timey.data.DataConverters
 import com.azzam.timey.data.entity.*
 import com.azzam.timey.data.repository.OccurrenceRepository
 import kotlinx.coroutines.Dispatchers
@@ -20,12 +21,16 @@ import org.threeten.bp.temporal.ChronoUnit
 
 class DailyAlarmReceiver : BroadcastReceiver() {
 
+    private lateinit var alarmManager: AlarmManager
+
     override fun onReceive(context: Context, intent: Intent) {
         Log.i("TAGGG", "DailyAlarm received")
         val today = LocalDate.now(ZoneOffset.UTC).atStartOfDay()
             .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
         val tomorrow = LocalDate.now(ZoneOffset.UTC).plusDays(1).atStartOfDay()
             .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+
+        alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val database = AppDatabase.getDatabase(context)
         val occurrenceRepository = OccurrenceRepository(database.OccurrenceDao())
@@ -35,9 +40,7 @@ class DailyAlarmReceiver : BroadcastReceiver() {
             setOccurrencesReminders(context, occurrences)
         }
 
-        setTomorrowAlarm(
-            context
-        )
+        setTomorrowAlarm(context)
     }
 
 
@@ -47,7 +50,6 @@ class DailyAlarmReceiver : BroadcastReceiver() {
 
     private fun setReminder(context: Context, occ: Occurrence){
         Log.i("TAGGG", "SET ALARM FOR ${occ.id}")
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val intent = Intent(context, ReminderReceiver::class.java)
         intent.putExtra("id", occ.id)
