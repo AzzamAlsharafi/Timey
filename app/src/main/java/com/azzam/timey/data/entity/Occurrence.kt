@@ -27,7 +27,7 @@ data class Occurrence(
     var reminder: Reminder,
 
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0
+    val id: Int = 0
 ) {
     companion object {
         val PARENT_EVENT: Int = 0
