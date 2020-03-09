@@ -11,11 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <receiver
-            android:name=".ReminderReceiver"
+            android:name=".receiver.ReminderReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
         <receiver
-            android:name=".DailyAlarmReceiver"
+            android:name=".receiver.DailyAlarmReceiver"
             android:enabled="true"
             android:exported="true" />
 

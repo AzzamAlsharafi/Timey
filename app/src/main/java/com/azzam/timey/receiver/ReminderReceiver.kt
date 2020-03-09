@@ -1,4 +1,4 @@
-package com.azzam.timey
+package com.azzam.timey.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context

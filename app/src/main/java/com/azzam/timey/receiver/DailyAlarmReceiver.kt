@@ -1,4 +1,4 @@
-package com.azzam.timey
+package com.azzam.timey.receiver
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -35,7 +35,9 @@ class DailyAlarmReceiver : BroadcastReceiver() {
             setOccurrencesReminders(context, occurrences)
         }
 
-        setTomorrowAlarm(context)
+        setTomorrowAlarm(
+            context
+        )
     }
 
 

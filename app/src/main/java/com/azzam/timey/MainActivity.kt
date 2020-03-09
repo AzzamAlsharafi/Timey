@@ -3,6 +3,7 @@ package com.azzam.timey
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.azzam.timey.receiver.DailyAlarmReceiver
 import com.azzam.timey.viewmodel.MainActivityViewModel
 
 class MainActivity : AppCompatActivity() {
