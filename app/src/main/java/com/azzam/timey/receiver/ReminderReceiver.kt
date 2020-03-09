@@ -8,7 +8,7 @@ import android.util.Log
 class ReminderReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
         Log.i("TAGGG", "${intent.getIntExtra("id", -1)}   REMINDER ALARM")
+        // TODO: Create notification for the reminder
     }
 }
