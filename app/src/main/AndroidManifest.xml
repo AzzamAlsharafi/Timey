@@ -10,7 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <receiver
+            android:name=".ReminderReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
         <receiver
             android:name=".DailyAlarmReceiver"
             android:enabled="true"

@@ -7,7 +7,7 @@ import com.azzam.timey.data.entity.Occurrence
 @Dao
 interface OccurrenceDao {
     @Query("SELECT * FROM occurrences_table WHERE (NOT :withReminder OR unit != 3) AND (datetime(start_date_time) BETWEEN datetime(:rangeStart) AND datetime(:rangeEnd))")
-    fun getAllInTimeRange(rangeStart: String, rangeEnd: String, withReminder: Boolean): LiveData<List<Occurrence>>
+    fun getAllInTimeRange(rangeStart: String, rangeEnd: String, withReminder: Boolean): List<Occurrence>
 
     @Query("SELECT * FROM occurrences_table WHERE parent_id == :id AND parent_type == :type")
     fun getAllOfParent(id: Int, type: Int): LiveData<List<Occurrence>>
