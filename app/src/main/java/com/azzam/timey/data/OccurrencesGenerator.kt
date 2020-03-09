@@ -294,16 +294,18 @@ object OccurrencesGenerator {
         while ((matchingDaysCounts / r.repeatingValue) < count) {
             if (check(date, start.toLocalDate())) {
                 if (matchingDaysCounts % r.repeatingValue == 0) {
-                    val occStart = start.with(date).toInstant().toEpochMilli()
-                    val occurrence = Occurrence(
-                        habit.id,
-                        Occurrence.PARENT_HABIT,
-                        occStart,
-                        occStart,
-                        habit.timezone,
-                        habit.reminder
-                    )
-                    occurrences.add(occurrence)
+                    for (time in habit.times){
+                        val occStart = start.with(date).with(time).toInstant().toEpochMilli()
+                        val occurrence = Occurrence(
+                            habit.id,
+                            Occurrence.PARENT_HABIT,
+                            occStart,
+                            occStart,
+                            habit.timezone,
+                            habit.reminder
+                        )
+                        occurrences.add(occurrence)
+                    }
                 }
                 matchingDaysCounts++
             }
@@ -337,16 +339,18 @@ object OccurrencesGenerator {
         while (date.isBefore(rEnd)) {
             if (check(date, start.toLocalDate())) {
                 if (matchingDaysCounts % r.repeatingValue == 0) {
-                    val occStart = start.with(date).toInstant().toEpochMilli()
-                    val occurrence = Occurrence(
-                        habit.id,
-                        Occurrence.PARENT_HABIT,
-                        occStart,
-                        occStart,
-                        habit.timezone,
-                        habit.reminder
-                    )
-                    occurrences.add(occurrence)
+                    for (time in habit.times){
+                        val occStart = start.with(date).with(time).toInstant().toEpochMilli()
+                        val occurrence = Occurrence(
+                            habit.id,
+                            Occurrence.PARENT_HABIT,
+                            occStart,
+                            occStart,
+                            habit.timezone,
+                            habit.reminder
+                        )
+                        occurrences.add(occurrence)
+                    }
                 }
                 matchingDaysCounts++
             }
