@@ -2,6 +2,7 @@ package com.azzam.timey.data
 
 import com.azzam.timey.data.entity.*
 import org.threeten.bp.Duration
+import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.OffsetDateTime
 import kotlin.math.ceil
@@ -55,14 +56,14 @@ object OccurrencesGenerator {
 
         val r = event.repeating
 
-        val count = if (r.endExtra.isNotEmpty()) {
+        val count = if (r.endExtra > 0) {
             r.endExtra.toInt()
         } else {
             Occurrence.MAX_OCCURRENCES_COUNT
         }
 
-        val start = event.startDateTime.atZoneSameInstant(event.timezone)
-        val end = event.endDateTime.atZoneSameInstant(event.timezone)
+        val start = Instant.ofEpochMilli(event.startDateTime).atZone(event.timezone)
+        val end = Instant.ofEpochMilli(event.endDateTime).atZone(event.timezone)
 
         val duration = Duration.between(start, end)
 
@@ -81,13 +82,13 @@ object OccurrencesGenerator {
         while ((matchingDaysCounts / r.repeatingValue) < count) {
             if (check(date, start.toLocalDate())) {
                 if (matchingDaysCounts % r.repeatingValue == 0) {
-                    val occStart: OffsetDateTime = start.with(date).toOffsetDateTime()
-                    val occEnd: OffsetDateTime = occStart.plusSeconds(duration.seconds)
+                    val occStart = start.with(date)
+                    val occEnd = occStart.plus(duration)
                     val occurrence = Occurrence(
                         event.id,
                         Occurrence.PARENT_EVENT,
-                        occStart,
-                        occEnd,
+                        occStart.toInstant().toEpochMilli(),
+                        occEnd.toInstant().toEpochMilli(),
                         event.timezone,
                         event.reminder
                     )
@@ -106,13 +107,13 @@ object OccurrencesGenerator {
 
         val r = event.repeating
 
-        val start = event.startDateTime.atZoneSameInstant(event.timezone)
-        val end = event.endDateTime.atZoneSameInstant(event.timezone)
+        val start = Instant.ofEpochMilli(event.startDateTime).atZone(event.timezone)
+        val end = Instant.ofEpochMilli(event.endDateTime).atZone(event.timezone)
 
         val duration = Duration.between(start, end)
 
         var date = start.toLocalDate()
-        val rEnd = LocalDate.parse(r.endExtra).plusDays(1)
+        val rEnd = Instant.ofEpochMilli(r.endExtra).atZone(event.timezone).toLocalDate().plusDays(1)
 
         var matchingDaysCounts = 0
 
@@ -127,13 +128,13 @@ object OccurrencesGenerator {
         while (date.isBefore(rEnd)) {
             if (check(date, start.toLocalDate())) {
                 if (matchingDaysCounts % r.repeatingValue == 0) {
-                    val occStart: OffsetDateTime = start.with(date).toOffsetDateTime()
-                    val occEnd: OffsetDateTime = occStart.plusSeconds(duration.seconds)
+                    val occStart = start.with(date)
+                    val occEnd = occStart.plus(duration)
                     val occurrence = Occurrence(
                         event.id,
                         Occurrence.PARENT_EVENT,
-                        occStart,
-                        occEnd,
+                        occStart.toInstant().toEpochMilli(),
+                        occEnd.toInstant().toEpochMilli(),
                         event.timezone,
                         event.reminder
                     )
@@ -173,13 +174,13 @@ object OccurrencesGenerator {
 
         val r = task.repeating
 
-        val count = if (r.endExtra.isNotEmpty()) {
+        val count = if (r.endExtra > 0) {
             r.endExtra.toInt()
         } else {
             Occurrence.MAX_OCCURRENCES_COUNT
         }
 
-        val start = task.dateTime.atZoneSameInstant(task.timezone)
+        val start = Instant.ofEpochMilli(task.dateTime).atZone(task.timezone)
 
         var date = start.toLocalDate()
 
@@ -196,7 +197,7 @@ object OccurrencesGenerator {
         while ((matchingDaysCounts / r.repeatingValue) < count) {
             if (check(date, start.toLocalDate())) {
                 if (matchingDaysCounts % r.repeatingValue == 0) {
-                    val occStart: OffsetDateTime = start.with(date).toOffsetDateTime()
+                    val occStart = start.with(date).toInstant().toEpochMilli()
                     val occurrence = Occurrence(
                         task.id,
                         Occurrence.PARENT_TASK,
@@ -220,10 +221,10 @@ object OccurrencesGenerator {
 
         val r = task.repeating
 
-        val start = task.dateTime.atZoneSameInstant(task.timezone)
+        val start = Instant.ofEpochMilli(task.dateTime).atZone(task.timezone)
 
         var date = start.toLocalDate()
-        val rEnd = LocalDate.parse(r.endExtra).plusDays(1)
+        val rEnd = Instant.ofEpochMilli(r.endExtra).atZone(task.timezone).toLocalDate().plusDays(1)
 
         var matchingDaysCounts = 0
 
@@ -238,7 +239,7 @@ object OccurrencesGenerator {
         while (date.isBefore(rEnd)) {
             if (check(date, start.toLocalDate())) {
                 if (matchingDaysCounts % r.repeatingValue == 0) {
-                    val occStart: OffsetDateTime = start.with(date).toOffsetDateTime()
+                    val occStart = start.with(date).toInstant().toEpochMilli()
                     val occurrence = Occurrence(
                         task.id,
                         Occurrence.PARENT_TASK,
@@ -270,13 +271,13 @@ object OccurrencesGenerator {
 
         val r = habit.repeating
 
-        val count = if (r.endExtra.isNotEmpty()) {
+        val count = if (r.endExtra > 0) {
             r.endExtra.toInt()
         } else {
             Occurrence.MAX_OCCURRENCES_COUNT
         }
 
-        val start = habit.startDate.atZoneSameInstant(habit.timezone)
+        val start = Instant.ofEpochMilli(habit.startDate).atZone(habit.timezone)
 
         var date = start.toLocalDate()
 
@@ -293,7 +294,7 @@ object OccurrencesGenerator {
         while ((matchingDaysCounts / r.repeatingValue) < count) {
             if (check(date, start.toLocalDate())) {
                 if (matchingDaysCounts % r.repeatingValue == 0) {
-                    val occStart: OffsetDateTime = start.with(date).toOffsetDateTime()
+                    val occStart = start.with(date).toInstant().toEpochMilli()
                     val occurrence = Occurrence(
                         habit.id,
                         Occurrence.PARENT_HABIT,
@@ -317,10 +318,9 @@ object OccurrencesGenerator {
 
         val r = habit.repeating
 
-        val start = habit.startDate.atZoneSameInstant(habit.timezone)
-        val end = habit.endDate.atZoneSameInstant(habit.timezone)
+        val start = Instant.ofEpochMilli(habit.startDate).atZone(habit.timezone)
 
-        val rEnd = end.toLocalDate().plusDays(1)
+        val rEnd = Instant.ofEpochMilli(r.endExtra).atZone(habit.timezone).toLocalDate().plusDays(1)
 
         var date = start.toLocalDate()
 
@@ -337,7 +337,7 @@ object OccurrencesGenerator {
         while (date.isBefore(rEnd)) {
             if (check(date, start.toLocalDate())) {
                 if (matchingDaysCounts % r.repeatingValue == 0) {
-                    val occStart: OffsetDateTime = start.with(date).toOffsetDateTime()
+                    val occStart = start.with(date).toInstant().toEpochMilli()
                     val occurrence = Occurrence(
                         habit.id,
                         Occurrence.PARENT_HABIT,

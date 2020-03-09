@@ -1,6 +1,7 @@
 package com.azzam.timey.data
 
 import androidx.room.TypeConverter
+import org.threeten.bp.LocalTime
 import org.threeten.bp.OffsetDateTime
 import org.threeten.bp.OffsetTime
 import org.threeten.bp.ZoneId
@@ -8,27 +9,16 @@ import org.threeten.bp.format.DateTimeFormatter
 
 // Data converter functions to convert between data types which can't be stored in the database.
 class DataConverters {
-    private val offsetDateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
-    private val offsetTimeFormatter = DateTimeFormatter.ISO_OFFSET_TIME
+    private val localTimeFormatter = DateTimeFormatter.ISO_LOCAL_TIME
 
     @TypeConverter
-    fun stringToOffsetDateTime(string: String): OffsetDateTime {
-        return OffsetDateTime.parse(string, offsetDateTimeFormatter)
+    fun localTimeListToString(times: List<LocalTime>) : String{
+        return times.joinToString(", ") { it.format(localTimeFormatter) }
     }
 
     @TypeConverter
-    fun offsetDateTimeToString(offsetDateTime: OffsetDateTime): String {
-        return offsetDateTime.format(offsetDateTimeFormatter)
-    }
-
-    @TypeConverter
-    fun offsetTimeListToString(times: List<OffsetTime>) : String{
-        return times.joinToString(", ") { it.format(offsetTimeFormatter) }
-    }
-
-    @TypeConverter
-    fun stringToOffsetTimeList(string: String) : List<OffsetTime>{
-        return string.split(", ").map { OffsetTime.parse(it, offsetTimeFormatter) }
+    fun stringToLocalTimeList(string: String) : List<LocalTime>{
+        return string.split(", ").map { LocalTime.parse(it, localTimeFormatter) }
     }
 
     @TypeConverter

@@ -14,6 +14,7 @@ import com.azzam.timey.data.repository.OccurrenceRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter
@@ -25,10 +26,11 @@ class DailyAlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.i("TAGGG", "DailyAlarm received")
-        val today = LocalDate.now(ZoneOffset.UTC).atStartOfDay()
-            .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-        val tomorrow = LocalDate.now(ZoneOffset.UTC).plusDays(1).atStartOfDay()
-            .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        val todayDateTime = LocalDate.now(ZoneOffset.UTC).atStartOfDay(ZoneOffset.UTC)
+        val tomorrowDateTime = todayDateTime.plusDays(1)
+
+        val today = todayDateTime.toInstant().toEpochMilli()
+        val tomorrow = tomorrowDateTime.toInstant().toEpochMilli()
 
         alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
@@ -36,7 +38,8 @@ class DailyAlarmReceiver : BroadcastReceiver() {
         val occurrenceRepository = OccurrenceRepository(database.OccurrenceDao())
 
         GlobalScope.launch(Dispatchers.IO) {
-            val occurrences = occurrenceRepository.getAllInTimeRange(today, tomorrow, withReminder = true)
+            val occurrences =
+                occurrenceRepository.getAllInTimeRange(today, tomorrow, withReminder = true)
             setOccurrencesReminders(context, occurrences)
         }
 
@@ -48,7 +51,7 @@ class DailyAlarmReceiver : BroadcastReceiver() {
         occurrences.forEach { setReminder(context, it) }
     }
 
-    private fun setReminder(context: Context, occ: Occurrence){
+    private fun setReminder(context: Context, occ: Occurrence) {
         Log.i("TAGGG", "SET ALARM FOR ${occ.id}")
 
         val intent = Intent(context, ReminderReceiver::class.java)
@@ -61,13 +64,14 @@ class DailyAlarmReceiver : BroadcastReceiver() {
             0
         )
 
-        val unit = when(occ.reminder.unit){
+        val unit = when (occ.reminder.unit) {
             Reminder.MINUTES -> ChronoUnit.MINUTES
             Reminder.HOURS -> ChronoUnit.HOURS
             else -> ChronoUnit.DAYS // Reminder.DAYS
         }
 
-        val reminderTime = occ.startDateTime.atZoneSameInstant(ZoneOffset.UTC).minus(occ.reminder.reminderValue.toLong(), unit)
+        val reminderTime = Instant.ofEpochMilli(occ.startDateTime).atZone(occ.timezone)
+            .minus(occ.reminder.reminderValue.toLong(), unit)
 
         val triggerTime = reminderTime.toInstant().toEpochMilli()
 
